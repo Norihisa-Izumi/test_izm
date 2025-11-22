@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    REPOSITORY_URI: 133285731447.dkr.ecr.ap-northeast-1.amazonaws.com/test-izm
+    REPOSITORY_URI: 133285731447.dkr.ecr.ap-northeast-1.amazonaws.com/izm-test-ecr-web
     IMAGE_TAG: latest
 
 phases:
