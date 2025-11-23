@@ -14,11 +14,9 @@ phases:
 
   build:
     commands:
-      - echo Enabling Docker Buildx...
-      - docker buildx create --use
-      - docker buildx inspect --bootstrap
-      - echo Building Docker image for x86_64...
-      - docker buildx build --platform linux/amd64 -t $REPOSITORY_URI:$IMAGE_TAG --push .
+      - echo Building Docker image...
+      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
 
   post_build:
     commands:
