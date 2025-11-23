@@ -3,13 +3,16 @@ version: 0.2
 env:
   variables:
     REPOSITORY_URI: 133285731447.dkr.ecr.ap-northeast-1.amazonaws.com/izm-test-ecr-web
-    IMAGE_TAG: latest
+    IMAGE_TAG: latest  # 必要に応じて Git SHA 等に変更可能
 
 phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin $REPOSITORY_URI
+      - echo Set IMAGE_TAG from commit hash if available
+      - IMAGE_TAG=$(echo ${CODEBUILD_RESOLVED_SOURCE_VERSION:-latest} | cut -c 1-7)
+      - echo IMAGE_TAG=$IMAGE_TAG
 
   build:
     commands:
@@ -18,9 +21,12 @@ phases:
 
   post_build:
     commands:
-      - echo Pushing the Docker image...
+      - echo Pushing the Docker image to ECR...
       - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Generating imagedefinitions.json for ECS deploy...
+      - printf '[{"name":"web","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - echo Build and push completed successfully.
 
 artifacts:
   files:
-    - '**/*'
+    - imagedefinitions.json
