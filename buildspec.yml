@@ -3,20 +3,22 @@ version: 0.2
 env:
   variables:
     REPOSITORY_URI: 133285731447.dkr.ecr.ap-northeast-1.amazonaws.com/izm-test-ecr-web
+    BASE_IMAGE_URI: 133285731447.dkr.ecr.ap-northeast-1.amazonaws.com/python:3.10-slim
     IMAGE_TAG: latest
 
 phases:
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR... 
+      - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin $REPOSITORY_URI
+      - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin $BASE_IMAGE_URI
       - IMAGE_TAG=$(echo ${CODEBUILD_RESOLVED_SOURCE_VERSION:-latest} | cut -c 1-7)
       - echo IMAGE_TAG=$IMAGE_TAG
 
   build:
     commands:
       - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      - docker build --build-arg BASE_IMAGE=$BASE_IMAGE_URI -t $REPOSITORY_URI:$IMAGE_TAG .
 
   post_build:
     commands:
