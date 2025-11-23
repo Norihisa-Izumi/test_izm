@@ -14,8 +14,8 @@ phases:
 
   build:
     commands:
-      - echo Building Docker image...
-      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      - echo Building Docker image for x86_64...
+      - docker build --platform linux/amd64 -t $REPOSITORY_URI:$IMAGE_TAG .
       - docker push $REPOSITORY_URI:$IMAGE_TAG
 
   post_build:
