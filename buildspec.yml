@@ -30,3 +30,6 @@ artifacts:
   files:
     - imagedefinitions.json
     - buildspec.yml
+    - Dockerfile
+    - requirements.txt
+    - app/**/*
