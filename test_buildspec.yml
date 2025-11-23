@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies for test stage...
+      - pip install --no-cache-dir requests  # テスト用ライブラリなど
+
+  build:
+    commands:
+      - echo Running tests...
+      # Docker イメージを使ったテスト例
+      - docker pull 133285731447.dkr.ecr.ap-northeast-1.amazonaws.com/izm-test-ecr-web:latest
+      - docker run --rm 133285731447.dkr.ecr.ap-northeast-1.amazonaws.com/izm-test-ecr-web:latest python -c "print('Test container ran successfully')"
+      - echo Tests completed successfully
