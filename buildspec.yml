@@ -23,7 +23,7 @@ phases:
       - echo Pushing the Docker image to ECR...
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Generating imagedefinitions.json for ECS deploy...
-      - printf '[{"name":"izm-test-web-task","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"izm-test-web-cnt","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - echo Build and push completed successfully.
 
 artifacts:
