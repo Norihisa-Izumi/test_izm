@@ -14,15 +14,16 @@ phases:
 
   build:
     commands:
-      - echo Building Docker image for x86_64...
-      - docker build --platform linux/amd64 -t $REPOSITORY_URI:$IMAGE_TAG .
+      - echo Building Docker image...
+      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
       - docker push $REPOSITORY_URI:$IMAGE_TAG
 
   post_build:
     commands:
-      - echo Generating imagedefinitions.json for ECS deploy...
+      - echo Writing imagedefinitions.json...
       - printf '[{"name":"izm-test-web-cnt","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - echo Build and push completed successfully.
+
 
 artifacts:
   files:
