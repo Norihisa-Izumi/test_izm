@@ -9,5 +9,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # アプリコードコピー
 COPY app/ ./app/
 
-EXPOSE 5000
+EXPOSE 80
 CMD ["python", "app/app.py"]
