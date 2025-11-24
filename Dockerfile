@@ -1,4 +1,4 @@
-FROM 133285731447.dkr.ecr.ap-northeast-1.amazonaws.com/my-python-base:3.10
+FROM 133285731447.dkr.ecr.ap-northeast-1.amazonaws.com/izm-test-python-base:3.10
 
 WORKDIR /app
 
