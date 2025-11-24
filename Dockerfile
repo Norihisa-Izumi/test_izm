@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM public.ecr.aws/amazonlinux/python:3.10
 
 WORKDIR /app
 
